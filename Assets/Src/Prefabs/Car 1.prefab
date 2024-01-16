@@ -10567,6 +10567,11 @@ PrefabInstance:
       propertyPath: m_CenterOfMass.y
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 5658231224253931688, guid: b28a3bda802aaad4aaefc0e8fd71d524,
+        type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 5042279172960412716}
     - target: {fileID: 6045572856867937880, guid: b28a3bda802aaad4aaefc0e8fd71d524,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10602,6 +10607,11 @@ PrefabInstance:
       propertyPath: _driftThreshold
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6836304478165101683, guid: b28a3bda802aaad4aaefc0e8fd71d524,
+        type: 3}
+      propertyPath: _visual
+      value: 
+      objectReference: {fileID: 2884635544142948750}
     - target: {fileID: 6836304478165101683, guid: b28a3bda802aaad4aaefc0e8fd71d524,
         type: 3}
       propertyPath: _steerSpeed
@@ -10871,6 +10881,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7389945123061549350}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2884635544142948750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5658231224253931688, guid: b28a3bda802aaad4aaefc0e8fd71d524,
+    type: 3}
+  m_PrefabInstance: {fileID: 7389945123061549350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189941ceb0640498f3576ae93614b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3848444165338535806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6045572856867937880, guid: b28a3bda802aaad4aaefc0e8fd71d524,

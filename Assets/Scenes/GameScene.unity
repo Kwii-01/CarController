@@ -1612,16 +1612,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1202643581771736728, guid: cd131a76a74bda34c8cef9085fd990be,
-        type: 3}
-      propertyPath: _driftThreshold
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806971263176794422, guid: cd131a76a74bda34c8cef9085fd990be,
-        type: 3}
-      propertyPath: _driftThreshold
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 5602979747716054116, guid: cd131a76a74bda34c8cef9085fd990be,
         type: 3}
       propertyPath: m_Name

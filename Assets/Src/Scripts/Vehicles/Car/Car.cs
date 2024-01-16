@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Vehicles {
+    [RequireComponent(typeof(CarVisual))]
     public class Car : Vehicle {
+        [SerializeField] private CarVisual _visual;
+
         [Header("Acceleration")]
         [SerializeField] private float _accelerationTime;
         [SerializeField] private AnimationCurve _accelerationCurve;
@@ -25,6 +28,11 @@ namespace Vehicles {
         private float _currentSpeed;
         private float _normalizedSpeed;
 
+        protected override void Reset() {
+            base.Reset();
+            this._visual = this.GetComponent<CarVisual>();
+        }
+
         private void Start() {
             this._accelerationTimer = this._accelerationTime;
         }
@@ -43,22 +51,30 @@ namespace Vehicles {
         }
 
         public override void Move(float direction) {
-            if (this.isBlackout == false) {
-                this._power = this.statBehaviour.Get(StatSystem.StatType.Acceleration) * direction;
-                if (this.IsMoving == false && direction != 0) {// JUST BEGAN TO SPEED
-                    this._accelerationTimer = 0f;
-                }
-                this.IsMoving = direction != 0f;
-                if (this.IsMoving == false) {
-                    this.Stop();
-                }
+            if (this.isBlackout) {
+                return;
             }
+            if (direction == 0f) {
+                this.Stop();
+                return;
+            }
+            this._power = this.statBehaviour.Get(StatSystem.StatType.Acceleration) * direction;
+            if (this.IsMoving == false) {// JUST BEGAN TO SPEED
+                this.IsMoving = true;
+                this._accelerationTimer = 0f;
+                this._visual.CancelBackLight();
+            }
+            this._visual.UpdateBackLight(this._power < 0);
+
         }
 
         public override void Stop() {
             this._power = 0f;
-            this.IsMoving = false;
             this._accelerationTimer = this._accelerationTime;
+            if (this.IsMoving) {
+                this.IsMoving = false;
+                this._visual.LightBackLightFor(1f);
+            }
         }
 
         public override void Steer(float direction) {
