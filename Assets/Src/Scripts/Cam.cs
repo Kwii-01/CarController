@@ -7,7 +7,7 @@ using DG.Tweening;
 
 using UnityEngine;
 
-namespace TankController {
+namespace CarController {
     public class Cam : MonoBehaviour {
         public static Cam Instance { get; private set; } = default;
 

@@ -5,65 +5,71 @@ using UnityEngine;
 
 namespace Vehicles {
     public class Car : Vehicle {
-        private const float MAX_STEER = 30f;
-        [Header("Car")]
-        [SerializeField] private float _maxSpeed;
-        [SerializeField] private float _acceleration;
-        [SerializeField] private float _braking;
-        [SerializeField] private AnimationCurve _speedCurve;
-        [SerializeField] private AnimationCurve _dragCurve;
+        [Header("Acceleration")]
+        [SerializeField] private float _accelerationTime;
+        [SerializeField] private AnimationCurve _accelerationCurve;
         [SerializeField] private Wheel[] _motorWheels;
+
+        [Header("Steering")]
+        [SerializeField] private float _maxSteer = 35f;
+        [SerializeField] private float _baseSteerSpeed = 4f;
+        [SerializeField] private float _steerSpeed = 2f;
         [SerializeField] private Wheel[] _steeringWheels;
 
-        [Header("Air control")]
-        [SerializeField] private float _maxSpeedAir;
-        [SerializeField] private float _accelerationAir;
-        [SerializeField] private AnimationCurve _speedAirCurve;
-        [SerializeField] private AnimationCurve _dragAirCurve;
+        public bool IsMoving { get; private set; } = false;
 
         private float _power;
-        private float _powerAC;
+        private float _accelerationTimer;
         private float _targetSteer;
         private float _steerSpeedFactor;
         private float _currentSpeed;
         private float _normalizedSpeed;
 
-        protected override void Awake() {
-            base.Awake();
-            this.rb.maxAngularVelocity = this._maxSpeedAir;
+        private void Start() {
+            this._accelerationTimer = this._accelerationTime;
+        }
+
+        private void Update() {
+            if (this.IsMoving) {
+                if (this._accelerationTimer < this._accelerationTime) {
+                    this._accelerationTimer += Time.deltaTime;
+                }
+            }
         }
 
         protected void FixedUpdate() {
             this.ApplyForcesOnWheels();
-            this.ApplyAirControl();
+            this.ClampSpeed();
         }
 
         public override void Move(float direction) {
             if (this.isBlackout == false) {
-                if (direction > 0) {
-                    this._power = this._acceleration;
-                } else if (direction < 0) {
-                    this._power = this._braking;
+                this._power = this.statBehaviour.Get(StatSystem.StatType.Acceleration) * direction;
+                if (this.IsMoving == false && direction != 0) {// JUST BEGAN TO SPEED
+                    this._accelerationTimer = 0f;
+                }
+                this.IsMoving = direction != 0f;
+                if (this.IsMoving == false) {
+                    this.Stop();
                 }
             }
         }
 
         public override void Stop() {
             this._power = 0f;
+            this.IsMoving = false;
+            this._accelerationTimer = this._accelerationTime;
         }
 
         public override void Steer(float direction) {
-            this._steerSpeedFactor = 2f;
+            this._steerSpeedFactor = this._steerSpeed;
             if (direction > 0) {
-                this._targetSteer = MAX_STEER;
-                this._powerAC = this._accelerationAir;
+                this._targetSteer = this._maxSteer;
             } else if (direction < 0) {
-                this._targetSteer = -MAX_STEER;
-                this._powerAC = -this._accelerationAir;
+                this._targetSteer = -this._maxSteer;
             } else {
-                this._powerAC = 0f;
                 this._targetSteer = 0f;
-                this._steerSpeedFactor = 4f;
+                this._steerSpeedFactor = this._baseSteerSpeed;
             }
         }
 
@@ -91,34 +97,21 @@ namespace Vehicles {
             }
         }
 
-        private void ApplyAirControl() {
-            if (this.IsGrounded() == false) {
-                if (this._powerAC != 0f) {
-                    this.rb.AddTorque(this.CalculateACInDirection(this.transform.up, this._powerAC));
-                } else {
-                    this.rb.AddTorque(this.rb.angularVelocity.normalized * this.CalculateAngularDrag());
-                }
-            }
-        }
-
         private float CalculateSpeed() {
             this._currentSpeed = Vector3.Dot(this.transform.forward, this.rb.velocity);
-            this._normalizedSpeed = Mathf.Clamp01(Mathf.Abs(this._currentSpeed) / this._maxSpeed);
-            if (this._power != 0f) {
-                return this._speedCurve.Evaluate(this._normalizedSpeed) * this._power;
+            this._normalizedSpeed = Mathf.Clamp01(Mathf.Abs(this._currentSpeed) / this.statBehaviour.Get(StatSystem.StatType.MoveSpeed));
+            if (this.IsMoving) {
+                return this._accelerationCurve.Evaluate(this._accelerationTimer / this._accelerationTime) * this._power;
             }
-            return this._dragCurve.Evaluate(1 - this._normalizedSpeed) * -this._currentSpeed * this.rb.mass;
+            return -this._currentSpeed * this.rb.mass * 2f;
         }
 
-        private float CalculateAngularDrag() {
-            float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(this.rb.angularVelocity.magnitude) / this._maxSpeedAir);
-            return this._dragAirCurve.Evaluate(1 - normalizedSpeed) * -this.rb.angularVelocity.magnitude * this.rb.mass;
+        private void ClampSpeed() {
+            Vector3 velocity = this.transform.InverseTransformDirection(this.rb.velocity);
+            float maxSpeed = this.statBehaviour.Get(StatSystem.StatType.MoveSpeed);
+            velocity.z = Mathf.Clamp(velocity.z, -maxSpeed, maxSpeed);
+            this.rb.velocity = this.transform.TransformDirection(velocity);
         }
 
-        private Vector3 CalculateACInDirection(Vector3 direction, float acceleration) {
-            float speed = Vector3.Dot(direction, this.rb.angularVelocity);
-            float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(speed) / this._maxSpeedAir);
-            return direction * this._speedAirCurve.Evaluate(normalizedSpeed) * acceleration;
-        }
     }
 }
