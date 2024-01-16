@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6045572856867937880}
   - component: {fileID: 2186882674796801443}
+  - component: {fileID: 6289995423243498094}
   m_Layer: 0
   m_Name: Wheel BR
   m_TagString: Untagged
@@ -44,13 +45,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cfcc1ae523a774f8f8baacb67b4730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbVehicle: {fileID: 4577609979389598783}
+  _vehicleRigidbody: {fileID: 4577609979389598783}
+  _visuals: {fileID: 6289995423243498094}
   _restDistance: 0
   _strength: 0
   _damping: 0
   _gripFactor: 0
   _tireMass: 0
-  Offset: 0
+--- !u!114 &6289995423243498094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311866915937317655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accdf06f65368e4696f9baa1e0afd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _driftThreshold: 0
+  _trailMarks: {fileID: 0}
+  _driftVFX: {fileID: 0}
 --- !u!1 &2711499385992467638
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +78,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8930823937377336296}
   - component: {fileID: 2166522039628046272}
+  - component: {fileID: 9195784353094510608}
   m_Layer: 0
   m_Name: Wheel FL
   m_TagString: Untagged
@@ -95,13 +113,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cfcc1ae523a774f8f8baacb67b4730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbVehicle: {fileID: 4577609979389598783}
+  _vehicleRigidbody: {fileID: 4577609979389598783}
+  _visuals: {fileID: 9195784353094510608}
   _restDistance: 0
   _strength: 0
   _damping: 0
   _gripFactor: 0
   _tireMass: 0
-  Offset: 0
+--- !u!114 &9195784353094510608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2711499385992467638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accdf06f65368e4696f9baa1e0afd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _driftThreshold: 0
+  _trailMarks: {fileID: 0}
+  _driftVFX: {fileID: 0}
 --- !u!1 &2756124526416333734
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3293769967830640501}
   - component: {fileID: 8305843182531602731}
+  - component: {fileID: 2538193631603372097}
   m_Layer: 0
   m_Name: Wheel BL
   m_TagString: Untagged
@@ -146,13 +181,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cfcc1ae523a774f8f8baacb67b4730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbVehicle: {fileID: 4577609979389598783}
+  _vehicleRigidbody: {fileID: 4577609979389598783}
+  _visuals: {fileID: 2538193631603372097}
   _restDistance: 0
   _strength: 0
   _damping: 0
   _gripFactor: 0
   _tireMass: 0
-  Offset: 0
+--- !u!114 &2538193631603372097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2756124526416333734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accdf06f65368e4696f9baa1e0afd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _driftThreshold: 0
+  _trailMarks: {fileID: 0}
+  _driftVFX: {fileID: 0}
 --- !u!1 &3120875290321253698
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8516540397034828064}
   - component: {fileID: 1685556375553540753}
+  - component: {fileID: 8520526926939336638}
   m_Layer: 0
   m_Name: Wheel FR
   m_TagString: Untagged
@@ -299,13 +351,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cfcc1ae523a774f8f8baacb67b4730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbVehicle: {fileID: 4577609979389598783}
+  _vehicleRigidbody: {fileID: 4577609979389598783}
+  _visuals: {fileID: 8520526926939336638}
   _restDistance: 0
   _strength: 0
   _damping: 0
   _gripFactor: 0
   _tireMass: 0
-  Offset: 0
+--- !u!114 &8520526926939336638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7815006754243064131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accdf06f65368e4696f9baa1e0afd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _driftThreshold: 0
+  _trailMarks: {fileID: 0}
+  _driftVFX: {fileID: 0}
 --- !u!1 &8688350021985726446
 GameObject:
   m_ObjectHideFlags: 0
